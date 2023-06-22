@@ -13,7 +13,163 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.purple,
       ),
-      home: MyHomePage(title: 'TASK-CHECKLIST'),
+      home: BemVindoScreen(),
+    );
+  }
+}
+
+class BemVindoScreen extends StatefulWidget {
+  @override
+  _BemVindoScreenState createState() => _BemVindoScreenState();
+}
+
+class _BemVindoScreenState extends State<BemVindoScreen>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _animationController;
+  late Animation<double> _opacityAnimation;
+  late Animation<Offset> _slideAnimation;
+  late Animation<double> _textAnimation;
+
+  @override
+  void initState() {
+    super.initState();
+    _animationController = AnimationController(
+      vsync: this,
+      duration: Duration(seconds: 2),
+    );
+
+    _opacityAnimation = Tween<double>(
+      begin: 0.0,
+      end: 1.0,
+    ).animate(_animationController);
+
+    _slideAnimation = Tween<Offset>(
+      begin: Offset(0.0, 1.0),
+      end: Offset.zero,
+    ).animate(
+      CurvedAnimation(
+        parent: _animationController,
+        curve: Curves.easeOut,
+      ),
+    );
+
+    _textAnimation = Tween<double>(
+      begin: 0.0,
+      end: 1.0,
+    ).animate(
+      CurvedAnimation(
+        parent: _animationController,
+        curve: Curves.easeOut,
+      ),
+    );
+
+    _animationController.forward();
+  }
+
+  @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
+  }
+
+  void _redirectToHomePage() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => MyHomePage(title: 'TASK-CHECKLIST')),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Container(
+        decoration: BoxDecoration(
+          color: Colors.purple,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.4),
+              blurRadius: 10.0,
+              spreadRadius: 2.0,
+            ),
+          ],
+        ),
+        child: SafeArea(
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: SlideTransition(
+                  position: _slideAnimation,
+                  child: ScaleTransition(
+                    scale: _textAnimation,
+                    child: Column(
+                      children: [
+                        Icon(
+                          Icons.check_circle,
+                          size: 80,
+                          color: Colors.white,
+                        ),
+                        SizedBox(height: 10),
+                        Text(
+                          'TASK-CHECKLIST',
+                          style: TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              Expanded(
+                child: Center(
+                  child: FadeTransition(
+                    opacity: _opacityAnimation,
+                    child: ScaleTransition(
+                      scale: _textAnimation,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Image.asset(
+                            '/Users/anthonysilveira/StudioProjects/a2_mobile/assets/animated_welcome.gif',
+                            fit: BoxFit.cover,
+                            width: 250,
+                            height: 200,
+                          ),
+                          SizedBox(height: 10),
+                          Text(
+                            'Seu app de Tarefas',
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 20.0),
+                child: ScaleTransition(
+                  scale: _textAnimation,
+                  child: ElevatedButton(
+                    onPressed: _redirectToHomePage,
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all(Colors.orange),
+                    ),
+                    child: Text('Vamos lá'),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }
