@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'screens/home.dart';
 import 'screens/perfil_screen.dart';
+import 'screens/cronometro_screen.dart';
 
 void main() => runApp(MyApp());
 
@@ -34,6 +35,8 @@ class _MyHomePageState extends State<MyHomePage> {
       'INICIO',
     ),
     Home(),
+    CronometroScreen(),
+
     PerfilScreen(),
     Text(
       'PERFIL',
@@ -56,23 +59,35 @@ class _MyHomePageState extends State<MyHomePage> {
         index: _selectedIndex,
         children: _widgetOptions,
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'INICIO',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.list),
-            label: 'TAREFAS',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'PERFIL',
-          ),
-        ],
-        currentIndex: _selectedIndex,
-        onTap: _onItemTapped,
+      bottomNavigationBar: Container(
+        decoration: BoxDecoration(
+          color: Colors.purple,
+        ),
+        child: BottomNavigationBar(
+          items: const <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home),
+              label: 'INICIO',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.list),
+              label: 'TAREFAS',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.access_time), // Ícone de um relógio
+              label: 'CRONOMETRO',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.person),
+              label: 'PERFIL',
+            ),
+          ],
+          currentIndex: _selectedIndex,
+          onTap: _onItemTapped,
+          backgroundColor: Colors.purple, // Defina como transparente para que a cor de fundo do Container seja visível
+          selectedItemColor: Colors.purple, // Define a cor dos ícones e rótulos dos itens selecionados
+          unselectedItemColor: Colors.purple, // Define a cor dos ícones e rótulos dos itens não selecionados
+        ),
       ),
     );
   }
