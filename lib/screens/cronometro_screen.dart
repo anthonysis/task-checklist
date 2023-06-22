@@ -59,9 +59,9 @@ class _CronometroScreenState extends State<CronometroScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Cronômetro'),
-      ),
+      // appBar: AppBar(
+      //   title: Text('Cronômetro'),
+      // ),
       body: _buildBody(),
     );
   }

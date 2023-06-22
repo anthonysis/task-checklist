@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'screens/home.dart';
 import 'screens/perfil_screen.dart';
 import 'screens/cronometro_screen.dart';
+import 'screens/feriados_screen.dart';
 
 void main() => runApp(MyApp());
 
@@ -9,6 +10,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Programa de Tarefas',
       theme: ThemeData(
         primarySwatch: Colors.purple,
@@ -187,9 +189,7 @@ class _MyHomePageState extends State<MyHomePage> {
   int _selectedIndex = 0;
 
   final List<Widget> _widgetOptions = [
-    Text(
-      'INICIO',
-    ),
+    FeriadosScreen(),
     Home(),
     CronometroScreen(),
 
@@ -231,7 +231,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.access_time), // Ícone de um relógio
-              label: 'CRONOMETRO',
+              label: 'CRONÔMETRO',
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.person),
